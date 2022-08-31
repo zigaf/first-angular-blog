@@ -1,0 +1,59 @@
+<form (ngSubmit)="submit()"
+      *ngIf="form"
+      [formGroup]="form"
+      class="card">
+  <h2>Enter to admin panel</h2>
+
+  <div *ngIf="auth.error$ | async as error" class="alert alert-danger">
+    {{error}}
+  </div>
+  <div *ngIf="message" class="alert alert-info">
+    {{message}}
+  </div>
+
+  <div
+    [ngClass]="{invalid: form.get('email')?.touched && form.get('email')?.invalid}"
+    class="form-control"
+  >
+    <label for="email">Email</label>
+    <input formControlName="email" id="email" type="email">
+    <div
+      *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('email')?.errors?.['required']">Email field must not be empty</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">Incorrect Email</small>
+    </div>
+  </div>
+
+  <div [ngClass]="{invalid: form.get('password')?.touched && form.get('password')?.invalid}"
+       class="form-control"
+  >
+    <label for="password">Password</label>
+    <input #showPassword formControlName="password" id="password" type="{{password}}">
+    <button (click)="hidePassword()"
+            class="btn-dark  btn-right"
+    >{{showPassword.type === 'text' ? 'hide' : 'show'  }} password
+    </button>
+    <div
+      *ngIf="form.get('password')?.touched && form.get('password')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('password')?.errors?.['required']">Password field must not be empty</small>
+      <small *ngIf="form.get('password')?.errors?.['minlength']">
+        password must contain at least
+        {{form.get('password')?.errors?.['minlength'].requiredLength}} symbols.
+        Now password
+        {{form.get('password')?.errors?.['minlength'].actualLength}}
+        symbols.
+      </small>
+    </div>
+  </div>
+
+  <button
+    [disabled]="form.invalid || submitted "
+    class="btn btn-primary"
+    type="submit"
+  >Enter
+  </button>
+</form>

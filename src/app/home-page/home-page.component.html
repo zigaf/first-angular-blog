@@ -1,0 +1,23 @@
+<button
+  class="btn btn-dark btn-center"
+  [routerLink]="['/admin']"
+> Create post </button>
+
+<div
+  *ngIf="posts$ | async as posts; else loading"
+  class="posts"
+>
+  <app-post
+  *ngFor="let post of posts"
+  [post]="post"
+  ></app-post>
+
+
+</div>
+
+<ng-template #loading>
+  <p class="text-center"> Loading... </p>
+</ng-template>
+
+
+

@@ -1,0 +1,47 @@
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  (ngSubmit)="submit()">
+  <h1>Create new Post</h1>
+
+  <div
+    [ngClass]="{invalid: form.get('title')?.invalid && form.get('title')?.touched}"
+    class="form-control"
+  >
+    <label for="title">Title</label>
+    <input formControlName="title" id="title" type="text">
+    <div
+      *ngIf="form.get('title')?.invalid && form.get('title')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('title')?.errors?.['required']">title field cant be empty</small>
+
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Content:</label>
+    <quill-editor formControlName="text"></quill-editor>
+  </div>
+
+  <div
+    [ngClass]="{invalid: form.get('author')?.touched && form.get('author')?.invalid}"
+    class="form-control"
+  >
+    <label for="author">Author</label>
+    <input formControlName="author" id="author" type="text">
+    <div
+      *ngIf="form.get('author')?.invalid && form.get('author')?.touched"
+      class="validation"
+    >
+      <small *ngIf="form.get('author')?.errors?.['required']">Author field cant be empty</small>
+
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-dark btn-block"
+    [disabled]="form.invalid"
+  >Create Post</button>
+</form>
